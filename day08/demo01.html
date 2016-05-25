@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="..\lib\vue.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <div>{{name}}</div>
+        <div>{{age}}</div>
+
+        <!--绑定方法-->
+        <a v-on:click='switchNameTo' href="javascript:void(0)">切换名字</a>
+
+
+        <!--绑定javascrit语句   $event可选-->
+
+        <a v-on:click='switchAgeTo(111111,$event)' href="javascript:void(0)">切换年龄</a>
+
+
+    </div>
+    <script>
+        window.onload = function() {
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    name: 1111,
+                    age:333
+
+                },
+                methods:{
+                    switchNameTo:function(event){
+                        this.name='222222';
+                        alert(event.target.tagName)
+                    },
+                    switchAgeTo:function(arg,event){
+                         this.age='4444';
+
+                         alert(event.target.tagName)
+
+                    }
+
+
+
+                }
+            });
+
+        }
+    </script>
+</body>
+
+</html>

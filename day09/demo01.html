@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="..\lib\vue.js" charset="utf-8"></script>
+    <script src="..\lib\router.js" charset="utf-8"></script>
+    <script src="app.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="app">
+
+
+        <div class='side'>
+            <!-- 使用指令 v-link 进行导航。 -->
+            <a v-link="{ path: '/foo' }">Go to Foo</a>
+            <a v-link="{ path: '/bar' }">Go to Bar</a>
+            <a v-link="{ path: '/test' }">Go to Test</a>
+
+        </div>
+        <div class='main'>
+            <!-- 路由外链 -->
+            <router-view></router-view>
+
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

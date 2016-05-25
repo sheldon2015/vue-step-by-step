@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Document</title>
+
+    <script src="..\lib\vue.js" ></script>
+    <style>
+        .common {
+            background: yellow;
+        }
+
+        .cls-a {
+            background: red;
+        }
+
+        .cls-b {
+            background: green;
+        }
+
+        .cls-c {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- //输出纯文本 -->
+        <div>
+            &lt;div&gt;aaaa&lt;/div&gt;
+            <div>ssss</div>
+            <div>{{ name+' '+location }} {{ok}}</div>
+        </div>
+
+        <!-- //输出单次文本 -->
+        <div>{{*name}}</div>
+
+        <!-- //输出html -->
+        <div>{{{name}}}</div>
+
+        <!-- 支持表达式 -->
+        <div>{{ok? 'yes':'no'}}</div>
+
+        <!-- 支持过滤器 -->
+        <div>{{location | capitalize}}</div>
+
+        <!-- 支持指令 -->
+        <!--指令用上字符串			 区分｛｛｝｝	-->
+        <div v-if="ok">{{name+ 'ok'}} </div>
+
+
+        <div v-if='ok'>
+            <p>包含父亲div</p>
+            <p>包含父亲div</p>
+            <p>包含父亲div</p>
+        </div>
+
+
+        <template v-if='!ok'>
+            <p>用template包装元素包裹 ，不包含父亲div</p>
+            <p>用template包装元素包裹 ，不包含父亲div</p>
+            <p>用template包装元素包裹 ，不包含父亲div</p>
+        </template>
+        <template v-else>
+            <p>ee</p>
+            <p>ee</p>
+
+        </template>
+
+        <!--支持计算属性 ，  maxage是一个计算属性-->
+        <div>
+            <span>MaxAge:</span> {{MaxAge}}
+        </div>
+
+
+
+
+
+
+        <!--class   和style  样式  -->
+        <div>
+
+            <!--对象添加class -->
+            <p class='common' v-bind:class="{  'cls-a':isA  ,'cls-b':isB,  'cls-c':true }">test demo</p>
+            <!--数组添加class  -->
+
+            <p v-bind:class='[cls-c]'>添加多个类名</p>
+
+
+        </div>
+
+
+
+
+        <!-- 用style   添加样式 -->
+        <div>
+            <!--对象添加style -->
+            <p v-bind:style='{ color:fontColor}'> style 对象样式</p>
+            <p v-bind:style='[styleA]'> style数组 样式</p>
+        </div>
+
+        <!--v-for    的特殊变量  -->
+
+        <div>
+            <ul>
+
+                <li v-for='item in items'>{{ $index+item.msg }}</li>
+            </ul>
+            <ul>
+                <template v-for='item in items'>
+                    <li>{{$index}}</li>
+                    <li>{{$index+2}}</li>
+                </template>
+
+
+            </ul>
+        </div>
+
+        <!-- 表单控件绑定 -->
+
+        <div>
+            <label for="edit">edit</label>
+
+            <input v-model='edit' id='edit' placeholder='edit value'>
+
+            <p> {{edit}} </p>
+
+
+        </div>
+        <!-- 单个checkbox   不绑定值，则是布尔值    -->
+
+        <div>
+            <label>单个checkbox </label>
+            <input v-model='toggle' type="checkbox" v-bind:true-value='aa' v-bind:false-value='bb'>
+            <div>{{toggle}}</div>
+
+        </div>
+
+
+        <!-- 多个checkbox -->
+        <div>
+            <input v-model='flag' type="checkbox" value='a'>
+            <input v-model='flag' type="checkbox" value='ab'>
+            <input v-model='flag' type="checkbox" value='abc'>
+
+            <div>{{flag}}</div>
+        </div>
+
+        <!-- radio   绑定值 -->
+        <div>
+            <input type="radio" name='r-demo' v-model='rFlag' value='aa'>
+            <input type="radio" name='r-demo' v-model='rFlag' value='bb'>
+            <input type="radio" name='r-demo' v-model='rFlag' value='cc'>
+            <div>{{rFlag}}</div>
+        </div>
+
+
+        <!-- select   -->
+
+        <select name="" v-model='select'>
+            <option value="a">1</option>
+            <option value="b">2</option>
+            <option value="c">3</option>
+
+        </select>
+        <div>{{select}}</div>
+        <!-- 支持一些配置参数   lazy    debounce    num等 -->
+
+
+
+        <!--自定义指令    引用的时候前面加上  v前缀    -->
+        <div v-my-directive=' {demo:"demoTest"} '></div>
+
+        <!-- <div v-my-directive='test'></div> -->
+
+
+
+
+        <!--自定义过滤器  可以接受参数  -->
+        <div>{{name | my-UpperCase 'self_define' }}</div>
+
+
+
+        <!-- 绑定事件 -->
+
+
+
+
+
+
+
+
+    </div>
+    <script>
+        window.onload = function() {
+            // 自定义指令    my-directive前面不要加v前缀
+
+            Vue.directive('my-directive', {
+                bind: function() {
+                    console.log('bind');
+                },
+                update: function(newValue, oldValue) {
+                    console.log('update');
+                    //this当前 添加自定义属性的dom元素
+
+                    this.el.innerHTML = 'my ' + newValue.demo;
+
+                },
+                unbind: function() {
+                    console.log('unbind');
+
+                }
+            });
+
+
+
+            Vue.filter('my-UpperCase', function(value, arg) {
+                return value.toUpperCase() + arg;
+
+            });
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    name: 'ywz',
+                    ok: true,
+                    location: 'yinshan',
+                    age: 6,
+                    "cls-c": 'cls-c',
+                    isA: false,
+                    isB: true,
+                    fontColor: 'blue',
+                    styleA: {
+                        fontSize: '20px',
+                        color: 'blue'
+                    },
+                    items: [{
+                        msg: '1'
+                    }, {
+                        msg: '2'
+                    }, {
+                        msg: '3'
+                    }],
+                    edit: '',
+                    toggle: 11,
+                    aa: 11,
+                    bb: 2,
+                    flag: [],
+                    rFlag: 'aa',
+                    select: '',
+                    test: 'demo test'
+
+
+                },
+                computed: {
+                    MaxAge: function() {
+                        return this.age + 100;
+
+                    }
+                }
+
+            });
+            // vm.$data.name = 'tom';
+            // vm.name = '<div>yaowenzhu</div>';
+            // vm.ok = false;
+
+
+
+
+
+        }
+    </script>
+</body>
+
+</html>

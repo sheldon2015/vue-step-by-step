@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>vue组件</title>
+    <script src="..\lib\vue.js"></script>
+    <script src="my-component.js"></script>
+    <script src="app.js" charset="utf-8"></script>
+
+    <style>
+        .fade-transition {
+            transition: opacity .3s ease;
+        }
+
+        .fade-enter,
+        .fade-leave {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <component :is="currentView" transition='fade' transition-mode="out-in"></component>
+    </div>
+
+
+    <a id='toggle-view' href="javascript:void(0)">
+        切换视图
+    </a>
+
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>路由基本</title>
+    <script src="..\lib\vue.js" charset="utf-8"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.10/vue-router.min.js'></script>
+    <script src="app.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Hello App!</h1>
+        <p>
+            <!-- 使用指令 v-link 进行导航。 -->
+            <a v-link="{ path: '/foo' }">Go to Foo</a>
+            <a v-link="{ path: '/bar' }">Go to Bar</a>
+
+
+        </p>
+        <!-- 路由外链 -->
+        <router-view></router-view>
+    </div>
+
+</body>
+
+</html>
